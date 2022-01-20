@@ -14,6 +14,8 @@ router
 
 /**
  * GET /article/:articleId
+ * PUT /article/:articleId
+ * DELETE /article/:articleId
  */
 router
   .route("/:articleId")

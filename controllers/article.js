@@ -8,24 +8,23 @@ exports.findAll = async (req, res) => {
 };
 
 exports.findAllByThemeId = async (req, res) => {
-  const themeId = req.params.themeId;
+  const themeId = +req.params.themeId;
+  
   const articlesList = await articleService.findAllByThemeId(themeId);
 
   res.status(200).json({ datas: articlesList });
 };
 
 exports.findOneById = async (req, res) => {
-  const id = req.params.articleId;
+  const id = +req.params.articleId;
   const article = await articleService.findOneById(id);
 
   res.status(200).json({ datas: article });
 };
 
 exports.addArticle = async (req, res) => {
-  const createdAt = new Date();
-
   try {
-    const result = await articleService.addArticle(req.body, createdAt);
+    const result = await articleService.addArticle(req.body);
 
     result.rowCount > 0
       ? res.status(201).json({ msg: "Created successfully" })
@@ -50,7 +49,8 @@ exports.updateArticle = async (req, res) => {
 };
 
 exports.deleteArticle = async (req, res) => {
-  const id = req.params.articleId;
+  const id = +req.params.articleId;
+  
   try {
     const result = await articleService.deleteArticle(id);
 
