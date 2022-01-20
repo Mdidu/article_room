@@ -33,3 +33,21 @@ exports.addArticle = async (body, createdAt) => {
 
   return result;
 };
+
+exports.updateArticle = async (articleId, body) => {
+  const { title, content, themeId } = body;
+  
+  const result = await db.query(
+    `UPDATE article SET title = $1, content = $2, theme_id = $3 WHERE id = $4`,
+    [title, content, themeId, articleId]
+  );
+  
+  return result;
+};
+
+exports.deleteArticle = async (id) => {
+  const result = await db.query(`DELETE FROM article WHERE article.id = $1`, [
+    id,
+  ]);
+  return result;
+};

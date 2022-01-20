@@ -15,7 +15,11 @@ router
 /**
  * GET /article/:articleId
  */
-router.route("/:articleId").get(articleController.findOneById);
+router
+  .route("/:articleId")
+  .get(articleController.findOneById)
+  .put(articleController.updateArticle)
+  .delete(articleController.deleteArticle);
 
 /**
  * GET /article/theme/:themeId

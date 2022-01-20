@@ -31,6 +31,33 @@ exports.addArticle = async (req, res) => {
       ? res.status(201).json({ msg: "Created successfully" })
       : _throw("Echec created");
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.updateArticle = async (req, res) => {
+  const articleId = +req.params.articleId;
+
+  try {
+    const result = await articleService.updateArticle(articleId, req.body);
+
+    result.rowCount > 0
+      ? res.status(200).json({ msg: "Updated successfully" })
+      : _throw("Updated failed");
+  } catch (error) {
+    res.status(502).json({ errors: error.message });
+  }
+};
+
+exports.deleteArticle = async (req, res) => {
+  const id = req.params.articleId;
+  try {
+    const result = await articleService.deleteArticle(id);
+
+    result.rowCount > 0
+      ? res.status(200).json({ msg: "Deleted successfully" })
+      : _throw("Deleted failed");
+  } catch (error) {
+    res.json({ errors: error });
   }
 };
