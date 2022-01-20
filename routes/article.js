@@ -5,9 +5,11 @@ const router = express.Router();
 
 /**
  * GET /article
+ * POST /article
  */
 router
   .route("/")
-  .get(articleController.findAll);
+  .get(articleController.findAll)
+  .post(articleController.addArticle);
 
 module.exports = router;
