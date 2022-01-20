@@ -12,4 +12,14 @@ router
   .get(articleController.findAll)
   .post(articleController.addArticle);
 
+/**
+ * GET /article/:articleId
+ */
+router.route("/:articleId").get(articleController.findOneById);
+
+/**
+ * GET /article/theme/:themeId
+ */
+router.route("/theme/:themeId").get(articleController.findAllByThemeId);
+
 module.exports = router;

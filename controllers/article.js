@@ -7,6 +7,20 @@ exports.findAll = async (req, res) => {
   res.status(200).json({ datas: articlesList });
 };
 
+exports.findAllByThemeId = async (req, res) => {
+  const themeId = req.params.themeId;
+  const articlesList = await articleService.findAllByThemeId(themeId);
+
+  res.status(200).json({ datas: articlesList });
+};
+
+exports.findOneById = async (req, res) => {
+  const id = req.params.articleId;
+  const article = await articleService.findOneById(id);
+
+  res.status(200).json({ datas: article });
+};
+
 exports.addArticle = async (req, res) => {
   const createdAt = new Date();
 
