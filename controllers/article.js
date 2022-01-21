@@ -30,7 +30,7 @@ exports.addArticle = async (req, res) => {
       ? res.status(201).json({ msg: "Created successfully" })
       : _throw("Echec created");
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ errors: error.message });
   }
 };
 
