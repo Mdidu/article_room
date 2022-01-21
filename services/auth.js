@@ -70,3 +70,22 @@ exports.signup = async (email, username, passwordHash) => {
     return { codeStatus: 401, msg: error.message };
   }
 };
+
+exports.validateAccount = async (username) => {
+  const userDatas = (await authRepository.findOneByUsername(username)).rows;
+  if (userDatas.length === 0)
+    return { codeStatus: 401, msg: "Unknown account !" };
+
+  if (userDatas[0].validate)
+    return { codeStatus: 401, msg: "Account already validate !" };
+
+  const updatedValidateAccount = await authRepository.updateUserValidate(
+    username,
+    true
+  );
+  
+  if (updatedValidateAccount.rowCount === 0)
+    return { codeStatus: 401, msg: "Updated failed !" };
+
+  return { codeStatus: 200, msg: "Updated sucessfully !" };
+};

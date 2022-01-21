@@ -7,5 +7,7 @@ const router = express.Router();
 router.post("/login", authController.login);
 /** POST /auth/signup */
 router.post("/signup", authController.signup);
+/** GET /auth/validate/:username */
+router.get("/validate/:username", authController.validateAccount);
 
 module.exports = router;

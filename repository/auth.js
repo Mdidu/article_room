@@ -17,3 +17,16 @@ exports.getSignup = async (email, username) => {
     [email, username]
   );
 };
+
+exports.findOneByUsername = async (username) => {
+  return await db.query(`SELECT * FROM user_entity WHERE username = $1`, [
+    username,
+  ]);
+};
+
+exports.updateUserValidate = async (username, validate) => {
+  return await db.query(
+    `UPDATE user_entity SET validate = $1 WHERE username = $2`,
+    [validate, username]
+  );
+};
