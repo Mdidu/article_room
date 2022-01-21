@@ -2,6 +2,7 @@ const authRepository = require("../repository/auth");
 const getSignup = require("./check/signup");
 const bcrypt = require("bcrypt");
 const { createTokenJWT } = require("../utils/jwtGenerator");
+const sendMail = require("../utils/sendMail");
 
 /** Login Logic */
 exports.login = async (body) => {
@@ -13,8 +14,10 @@ exports.login = async (body) => {
   const passwordValid = await bcrypt.compare(password, result.password);
   if (!passwordValid) return { codeStatus: 401, msg: "Incorrect password !" };
 
-  if (!result.validate)
+  if (!result.validate) {
+    sendMail(email, result.username);
     return { codeStatus: 401, msg: "Account not validate !" };
+  }
 
   const token = createTokenJWT(
     +result.id,
@@ -22,7 +25,7 @@ exports.login = async (body) => {
     result.username,
     +result.role_id
   );
-  
+
   return { codeStatus: 200, msg: "Login sucessfully", token };
 };
 
@@ -42,14 +45,27 @@ exports.signup = async (email, username, passwordHash) => {
     return { codeStatus: 401, msg: "Username already used" };
 
   try {
-    await authRepository.signup(
+    const result = await authRepository.signup(
       email,
       username,
       passwordHash,
       roleId,
       validate
     );
-    return { codeStatus: 201, msg: "Created sucessfully" };
+
+    if (result.rowCount === 0) {
+      return {
+        codeStatus: 401,
+        msg: "Created account failed !",
+      };
+    }
+
+    sendMail(email, username);
+
+    return {
+      codeStatus: 201,
+      msg: "Created sucessfully ! An email has been sent to you to validate your account !",
+    };
   } catch (error) {
     return { codeStatus: 401, msg: error.message };
   }
