@@ -1,5 +1,6 @@
 const express = require("express");
 const articleRoutes = require("./routes/article");
+const themeRoutes = require("./routes/theme");
 
 const server = express();
 
@@ -7,5 +8,6 @@ const server = express();
 server.use(express.json({ extended: false }));
 
 server.use("/article", articleRoutes);
+server.use('/theme', themeRoutes);
 
 server.listen(8080);
