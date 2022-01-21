@@ -1,5 +1,9 @@
 const db = require("../utils/database");
 
+exports.login = async (email) => {
+  return await db.query(`SELECT * FROM user_entity WHERE email = $1`, [email]);
+};
+
 exports.signup = async (email, username, password, roleId, validate) => {
   return await db.query(
     `INSERT INTO user_entity(email, username, password, role_id, validate) VALUES ($1, $2, $3, $4, $5)`,

@@ -1,11 +1,22 @@
 const authService = require("../services/auth");
 const bcrypt = require("bcrypt");
 
-exports.login = (req, res) => {};
+/** Code status :
+ * SUCCESS 200
+ * ECHEC 401
+ */
+exports.login = async (req, res) => {
+  const result = await authService.login(req.body);
+
+  if (result.codeStatus === 401)
+    return res.status(result.codeStatus).json({ errors: result.msg });
+
+  res.status(result.codeStatus).json({ msg: result.msg, token: result.token });
+};
 
 /** Code status :
  * SUCCESS 201
- * ECHEC 500
+ * ECHEC 401
  */
 exports.signup = async (req, res) => {
   const { email, username, password } = req.body;
@@ -13,7 +24,7 @@ exports.signup = async (req, res) => {
 
   const { codeStatus, msg } = await authService.signup(email, username, hash);
 
-  codeStatus < 400
+  codeStatus === 201
     ? res.status(codeStatus).json({ msg })
     : res.status(codeStatus).json({ errors: msg });
 };
