@@ -9,7 +9,7 @@ exports.findAll = async (req, res) => {
 
 exports.findAllByThemeId = async (req, res) => {
   const themeId = +req.params.themeId;
-  
+
   const articlesList = await articleService.findAllByThemeId(themeId);
 
   res.status(200).json({ datas: articlesList });
@@ -30,7 +30,7 @@ exports.addArticle = async (req, res) => {
       ? res.status(201).json({ msg: "Created successfully" })
       : _throw("Echec created");
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -50,7 +50,7 @@ exports.updateArticle = async (req, res) => {
 
 exports.deleteArticle = async (req, res) => {
   const id = +req.params.articleId;
-  
+
   try {
     const result = await articleService.deleteArticle(id);
 
@@ -58,6 +58,6 @@ exports.deleteArticle = async (req, res) => {
       ? res.status(200).json({ msg: "Deleted successfully" })
       : _throw("Deleted failed");
   } catch (error) {
-    res.json({ errors: error });
+    res.status(502).json({ errors: error.message });
   }
 };
