@@ -32,7 +32,7 @@ exports.findOneById = async (req, res) => {
 
 /** Code status :
  * SUCCESS 201
- * ECHEC 400, 403, 500
+ * ECHEC 400, 403
  */
 exports.addArticle = async (req, res) => {
   const { codeStatus, msg } = await articleService.addArticle(req.body);
@@ -42,7 +42,7 @@ exports.addArticle = async (req, res) => {
 
 /** Code status :
  * SUCCESS 200
- * ECHEC 400, 403, 500
+ * ECHEC 400, 403
  */
 exports.updateArticle = async (req, res) => {
   const articleId = +req.params.articleId;
@@ -57,7 +57,7 @@ exports.updateArticle = async (req, res) => {
 
 /** Code status :
  * SUCCESS 200
- * ECHEC 400, 403, 500
+ * ECHEC 400, 403
  */
 exports.deleteArticle = async (req, res) => {
   const id = +req.params.articleId;
