@@ -1,12 +1,17 @@
 const articleService = require("../services/article");
-const _throw = require("../utils/throw");
 
+/**
+ * SUCCESS 200
+ */
 exports.findAll = async (req, res) => {
   const articlesList = await articleService.findAll();
 
   res.status(200).json({ datas: articlesList });
 };
 
+/**
+ * SUCCESS 200
+ */
 exports.findAllByThemeId = async (req, res) => {
   const themeId = +req.params.themeId;
 
@@ -15,6 +20,9 @@ exports.findAllByThemeId = async (req, res) => {
   res.status(200).json({ datas: articlesList });
 };
 
+/**
+ * SUCCESS 200
+ */
 exports.findOneById = async (req, res) => {
   const id = +req.params.articleId;
   const article = await articleService.findOneById(id);
@@ -22,42 +30,40 @@ exports.findOneById = async (req, res) => {
   res.status(200).json({ datas: article });
 };
 
+/** Code status :
+ * SUCCESS 201
+ * ECHEC 400, 403, 500
+ */
 exports.addArticle = async (req, res) => {
-  try {
-    const result = await articleService.addArticle(req.body);
+  const { codeStatus, msg } = await articleService.addArticle(req.body);
 
-    result.rowCount > 0
-      ? res.status(201).json({ msg: "Created successfully" })
-      : _throw("Echec created");
-  } catch (error) {
-    res.status(500).json({ errors: error.message });
-  }
+  res.status(codeStatus).json({ msg });
 };
 
+/** Code status :
+ * SUCCESS 200
+ * ECHEC 400, 403, 500
+ */
 exports.updateArticle = async (req, res) => {
   const articleId = +req.params.articleId;
 
-  try {
-    const result = await articleService.updateArticle(articleId, req.body);
+  const { codeStatus, msg } = await articleService.updateArticle(
+    articleId,
+    req.body
+  );
 
-    result.rowCount > 0
-      ? res.status(200).json({ msg: "Updated successfully" })
-      : _throw("Updated failed");
-  } catch (error) {
-    res.status(502).json({ errors: error.message });
-  }
+  res.status(codeStatus).json({ msg });
 };
 
+/** Code status :
+ * SUCCESS 200
+ * ECHEC 400, 403, 500
+ */
 exports.deleteArticle = async (req, res) => {
   const id = +req.params.articleId;
+  const admin = req.body.user.admin;
 
-  try {
-    const result = await articleService.deleteArticle(id);
+  const { codeStatus, msg } = await articleService.deleteArticle(id, admin);
 
-    result.rowCount > 0
-      ? res.status(200).json({ msg: "Deleted successfully" })
-      : _throw("Deleted failed");
-  } catch (error) {
-    res.status(502).json({ errors: error.message });
-  }
+  res.status(codeStatus).json({ msg });
 };

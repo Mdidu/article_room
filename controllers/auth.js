@@ -6,12 +6,11 @@ const bcrypt = require("bcrypt");
  * ECHEC 401
  */
 exports.login = async (req, res) => {
-  const result = await authService.login(req.body);
+  const { codeStatus, msg, token } = await authService.login(req.body);
 
-  if (result.codeStatus === 401)
-    return res.status(result.codeStatus).json({ errors: result.msg });
-
-  res.status(result.codeStatus).json({ msg: result.msg, token: result.token });
+  codeStatus === 401
+    ? res.status(codeStatus).json({ msg })
+    : res.status(codeStatus).json({ msg, token: token });
 };
 
 /** Code status :
@@ -24,9 +23,7 @@ exports.signup = async (req, res) => {
 
   const { codeStatus, msg } = await authService.signup(email, username, hash);
 
-  codeStatus === 201
-    ? res.status(codeStatus).json({ msg })
-    : res.status(codeStatus).json({ errors: msg });
+  res.status(codeStatus).json({ msg });
 };
 
 /** Code status :
@@ -37,8 +34,6 @@ exports.validateAccount = async (req, res) => {
   const username = req.params.username;
 
   const { codeStatus, msg } = await authService.validateAccount(username);
-  
-  codeStatus === 200
-    ? res.status(codeStatus).json({ msg })
-    : res.status(codeStatus).json({ errors: msg });
+
+  res.status(codeStatus).json({ msg });
 };
