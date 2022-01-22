@@ -5,8 +5,13 @@ const auth = require("../middlewares/auth");
 const router = express.Router();
 
 /**
- * GET /theme
- * POST /theme
+ * @route GET theme
+ * 
+ * @method GET
+ * @access public
+ * 
+ * @method POST
+ * @access private
  */
 router
   .route("/")
@@ -14,8 +19,13 @@ router
   .post([auth], themeController.addTheme);
 
 /**
- * PUT /theme/:themeId
- * DELETE /theme/:themeId
+ * @route PUT theme/:themeId
+ * 
+ * @method PUT
+ * @access private
+ * 
+ * @method DELETE
+ * @access private
  */
 router
   .route("/:themeId")

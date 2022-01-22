@@ -4,7 +4,11 @@ const bcrypt = require("bcrypt");
 const { createTokenJWT } = require("../utils/jwtGenerator");
 const sendMail = require("../utils/sendMail");
 
-/** Login Logic */
+/**
+ * Login logic
+ * @param { Object } body
+ * @return { Promise<{codeStatus: Number, msg: String}> }
+ */
 exports.login = async (body) => {
   const { email, password } = body;
 
@@ -30,7 +34,11 @@ exports.login = async (body) => {
 };
 
 /**
- * Signup Logic
+ * Signup logic
+ * @param { String } email
+ * @param { String } username
+ * @param { String } passwordHash
+ * @return { Promise<{codeStatus: Number, msg: String}> }
  */
 exports.signup = async (email, username, passwordHash) => {
   const roleId = 1;
@@ -71,6 +79,11 @@ exports.signup = async (email, username, passwordHash) => {
   }
 };
 
+/**
+ * Validate account
+ * @param { String } username
+ * @return { Promise<{codeStatus: Number, msg: String}> }
+ */
 exports.validateAccount = async (username) => {
   const userDatas = (await authRepository.findOneByUsername(username)).rows;
   if (userDatas.length === 0)
@@ -83,7 +96,7 @@ exports.validateAccount = async (username) => {
     username,
     true
   );
-  
+
   if (updatedValidateAccount.rowCount === 0)
     return { codeStatus: 401, msg: "Updated failed !" };
 
