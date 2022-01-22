@@ -1,5 +1,6 @@
 const express = require("express");
 const themeController = require("../controllers/theme");
+const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
@@ -7,7 +8,10 @@ const router = express.Router();
  * GET /theme
  * POST /theme
  */
-router.route("/").get(themeController.findAll).post(themeController.addTheme);
+router
+  .route("/")
+  .get([auth], themeController.findAll)
+  .post([auth], themeController.addTheme);
 
 /**
  * PUT /theme/:themeId
@@ -15,7 +19,7 @@ router.route("/").get(themeController.findAll).post(themeController.addTheme);
  */
 router
   .route("/:themeId")
-  .put(themeController.updateTheme)
-  .delete(themeController.deleteTheme);
+  .put([auth], themeController.updateTheme)
+  .delete([auth], themeController.deleteTheme);
 
 module.exports = router;

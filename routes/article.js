@@ -1,5 +1,6 @@
 const express = require("express");
 const articleController = require("../controllers/article");
+const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ const router = express.Router();
 router
   .route("/")
   .get(articleController.findAll)
-  .post(articleController.addArticle);
+  .post([auth], articleController.addArticle);
 
 /**
  * GET /article/:articleId
@@ -20,8 +21,8 @@ router
 router
   .route("/:articleId")
   .get(articleController.findOneById)
-  .put(articleController.updateArticle)
-  .delete(articleController.deleteArticle);
+  .put([auth], articleController.updateArticle)
+  .delete([auth], articleController.deleteArticle);
 
 /**
  * GET /article/theme/:themeId

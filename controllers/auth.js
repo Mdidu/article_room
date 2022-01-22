@@ -37,7 +37,7 @@ exports.validateAccount = async (req, res) => {
   const username = req.params.username;
 
   const { codeStatus, msg } = await authService.validateAccount(username);
-
+  
   codeStatus === 200
     ? res.status(codeStatus).json({ msg })
     : res.status(codeStatus).json({ errors: msg });
