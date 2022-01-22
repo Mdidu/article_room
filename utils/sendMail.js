@@ -9,6 +9,10 @@ const transporter = nodemailer.createTransport(
   })
 );
 
+/**
+ * @param { String } email
+ * @param { String } username
+ */
 const sendMail = (email, username) => {
   const to = email;
   const subject = `Bienvenue ${username} ! Valider votre compte !`;

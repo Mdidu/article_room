@@ -1,6 +1,10 @@
 const authRepository = require("../../repository/auth");
 
-/** Checking if log already exist */
+/** Checking if log already exist
+ * @param { String } email
+ * @param { String } username
+ * @return { Promise<{Boolean, Boolean}> }
+ */
 const getSignup = async (email, username) => {
   const result = await authRepository.getSignup(email, username);
 
@@ -16,7 +20,11 @@ const getSignup = async (email, username) => {
   return { emailAlreadyExist: false, usernameAlreadyExist: false };
 };
 
-/** Checking if email already exist */
+/** Checking if email already exist
+ * @param { String } email
+ * @param { Array } datas
+ * @return { Boolean }
+ */
 const checkingEmail = (email, datas) => {
   const emailToCheck = datas
     .filter((data) => data.email === email)
@@ -26,7 +34,11 @@ const checkingEmail = (email, datas) => {
   return email === emailToCheck ? true : false;
 };
 
-/** Checking if username already exist */
+/** Checking if username already exist
+ * @param { String } username
+ * @param { Array } datas
+ * @return { Boolean }
+ */
 const checkingUsername = (username, datas) => {
   const usernameToCheck = datas
     .filter((data) => data.username === username)

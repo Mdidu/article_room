@@ -1,8 +1,8 @@
 const themeService = require("../services/theme");
-const _throw = require("../utils/throw");
 
 /**
- * SUCESS 200
+ * @code 200
+ * @code 403
  */
 exports.findAll = async (req, res) => {
   const admin = req.body.user.admin;
@@ -14,13 +14,14 @@ exports.findAll = async (req, res) => {
   } = await themeService.findAll(admin);
 
   codeStatus === 200
-    ? res.status(codeStatus).json({ datas: themesList })
+    ? res.status(codeStatus).json(themesList)
     : res.status(codeStatus).json({ msg });
 };
 
-/** Code status :
- * SUCCESS 201
- * ECHEC 400, 403
+/**
+ * @code 201
+ * @code 400
+ * @code 403
  */
 exports.addTheme = async (req, res) => {
   const { codeStatus, msg } = await themeService.addTheme(req.body);
@@ -28,9 +29,10 @@ exports.addTheme = async (req, res) => {
   res.status(codeStatus).json({ msg });
 };
 
-/** Code status :
- * SUCCESS 201
- * ECHEC 400, 403
+/**
+ * @code 200
+ * @code 400
+ * @code 403
  */
 exports.updateTheme = async (req, res) => {
   const id = +req.params.themeId;
@@ -40,9 +42,10 @@ exports.updateTheme = async (req, res) => {
   res.status(codeStatus).json({ msg });
 };
 
-/** Code status :
- * SUCCESS 201
- * ECHEC 400, 403
+/**
+ * @code 200
+ * @code 400
+ * @code 403
  */
 exports.deleteTheme = async (req, res) => {
   const id = +req.params.themeId;

@@ -1,24 +1,39 @@
 const articleRepository = require("../repository/article");
 const _throw = require("../utils/throw");
 
+/**
+ * @return { Promise<Array> }
+ */
 exports.findAll = async () => {
   const result = await articleRepository.findAll();
 
   return result.rows;
 };
 
+/**
+ * @param { Number } themeId
+ * @return { Promise<Array> }
+ */
 exports.findAllByThemeId = async (themeId) => {
   const result = await articleRepository.findAllByThemeId(themeId);
 
   return result.rows;
 };
 
+/**
+ * @param { Number } id
+ * @return { Promise<Object> }
+ */
 exports.findOneById = async (id) => {
   const result = await articleRepository.findOneById(id);
 
-  return result.rows;
+  return result.rows[0];
 };
 
+/**
+ * @param { Object } body
+ * @return { Promise<{codeStatus: Number, msg: String}> }
+ */
 exports.addArticle = async (body) => {
   const { title, content, themeId, user } = body;
   const { id: userId, admin } = user;
@@ -44,6 +59,11 @@ exports.addArticle = async (body) => {
   }
 };
 
+/**
+ * @param { Number } articleId
+ * @param { Object } body
+ * @return { Promise<{codeStatus: Number, msg: String}> }
+ */
 exports.updateArticle = async (articleId, body) => {
   const { title, content, themeId, user } = body;
   const { admin } = user;
@@ -66,6 +86,11 @@ exports.updateArticle = async (articleId, body) => {
   }
 };
 
+/**
+ * @param { Number } id
+ * @param { Boolean } admin
+ * @return { Promise<{codeStatus: Number, msg: String}> }
+ */
 exports.deleteArticle = async (id, admin) => {
   if (!admin) return { codeStatus: 403, msg: "Insufficient right !" };
 

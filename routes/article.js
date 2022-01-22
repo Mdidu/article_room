@@ -5,8 +5,13 @@ const auth = require("../middlewares/auth");
 const router = express.Router();
 
 /**
- * GET /article
- * POST /article
+ * @route article
+ * 
+ * @method GET
+ * @access public
+ * 
+ * @method POST
+ * @access private
  */
 router
   .route("/")
@@ -14,9 +19,16 @@ router
   .post([auth], articleController.addArticle);
 
 /**
- * GET /article/:articleId
- * PUT /article/:articleId
- * DELETE /article/:articleId
+ * @route article/:articleId
+ * 
+ * @method GET
+ * @access public
+ * 
+ * @method PUT
+ * @access private
+ * 
+ * @method DELETE
+ * @access private
  */
 router
   .route("/:articleId")
@@ -25,7 +37,10 @@ router
   .delete([auth], articleController.deleteArticle);
 
 /**
- * GET /article/theme/:themeId
+ * @route article/theme/:themeId
+ * 
+ * @method GET
+ * @access public
  */
 router.route("/theme/:themeId").get(articleController.findAllByThemeId);
 

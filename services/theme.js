@@ -1,6 +1,10 @@
 const themeRepository = require("../repository/theme");
 const _throw = require("../utils/throw");
 
+/**
+ * @param { Boolean } admin
+ * @return { Promise<{codeStatus: Number, msg: String}> }
+ */
 exports.findAll = async (admin) => {
   if (!admin) return { codeStatus: 403, msg: "Insufficient right !" };
 
@@ -9,6 +13,10 @@ exports.findAll = async (admin) => {
   return { codeStatus: 200, datas: result };
 };
 
+/**
+ * @param { Object } body
+ * @return { Promise<{codeStatus: Number, msg: String}> }
+ */
 exports.addTheme = async (body) => {
   const { name, user } = body;
   const { admin } = user;
@@ -26,6 +34,11 @@ exports.addTheme = async (body) => {
   }
 };
 
+/**
+ * @param { Number } id
+ * @param { Object } body
+ * @return { Promise<{codeStatus: Number, msg: String}> }
+ */
 exports.updateTheme = async (id, body) => {
   const { name, user } = body;
   const { admin } = user;
@@ -43,6 +56,11 @@ exports.updateTheme = async (id, body) => {
   }
 };
 
+/**
+ * @param { Number } id
+ * @param { Boolean } admin
+ * @return { Promise<{codeStatus: Number, msg: String}> }
+ */
 exports.deleteTheme = async (id, admin) => {
   if (!admin) return { codeStatus: 403, msg: "Insufficient right !" };
 
