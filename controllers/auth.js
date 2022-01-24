@@ -6,11 +6,11 @@ const bcrypt = require("bcrypt");
  * @code 401
  */
 exports.login = async (req, res) => {
-  const { codeStatus, msg, token } = await authService.login(req.body);
+  const { codeStatus, msg, user, token } = await authService.login(req.body);
 
   codeStatus === 401
     ? res.status(codeStatus).json({ msg })
-    : res.status(codeStatus).json({ msg, token: token });
+    : res.status(codeStatus).json({ msg, user, token: token });
 };
 
 /**
