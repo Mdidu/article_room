@@ -16,9 +16,9 @@ exports.login = async (body) => {
 
   const passwordValid = await bcrypt.compare(password, result.password);
 
-  let roleName = "user";
-  if (+result.role_id === 2) roleName = "moderator";
-  else if (+result.role_id === 3) roleName = "admin";
+  let roleName = "User";
+  if (+result.role_id === 2) roleName = "Moderator";
+  else if (+result.role_id === 3) roleName = "Admin";
 
   if (!result || !passwordValid)
     return { codeStatus: 401, msg: "Incorrect email or password !" };

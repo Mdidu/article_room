@@ -1,22 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../store/auth-context";
 
 const Navbar = () => {
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    auth.logoutHandler();
+    navigate("/");
+  };
+
   return (
     <nav>
       <ul>
         <li>
-          <Link to={{ pathname: "" }}>LOGO</Link>
+          <Link to="/">LOGO</Link>
         </li>
         <li>
-          <Link to={{ pathname: "/articles" }}>Voir les articles</Link>
+          <Link to="/articles">Voir les articles</Link>
         </li>
-        <li>
-          <Link to={{ pathname: "/signin" }}>Sign In</Link>
-        </li>
-        <li>
-          <Link to={{ pathname: "/signup" }}>Sign Up</Link>
-        </li>
+
+        {auth.roleName === "Admin" && (
+          <li>
+            <Link to="/article/new">New Article</Link>
+          </li>
+        )}
+
+        {!auth.isLoggedIn && (
+          <>
+            <li>
+              <Link to="/signin">Sign In</Link>
+            </li>
+            <li>
+              <Link to="/signup">Sign Up</Link>
+            </li>
+          </>
+        )}
+
+        {auth.isLoggedIn && <li onClick={logoutHandler}>Logout</li>}
       </ul>
     </nav>
   );
