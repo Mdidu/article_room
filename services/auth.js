@@ -7,20 +7,28 @@ const sendMail = require("../utils/sendMail");
 /**
  * Login logic
  * @param { Object } body
- * @return { Promise<{codeStatus: Number, msg: String}> }
+ * @return { Promise<{codeStatus: Number, user: {username: String, roleName: String}, msg: String}> }
  */
 exports.login = async (body) => {
   const { email, password } = body;
 
   const result = (await authRepository.login(email)).rows[0];
-  if (!result) return { codeStatus: 401, msg: "User not found !" };
 
   const passwordValid = await bcrypt.compare(password, result.password);
-  if (!passwordValid) return { codeStatus: 401, msg: "Incorrect password !" };
+
+  let roleName = "user";
+  if (+result.role_id === 2) roleName = "moderator";
+  else if (+result.role_id === 3) roleName = "admin";
+
+  if (!result || !passwordValid)
+    return { codeStatus: 401, msg: "Incorrect email or password !" };
 
   if (!result.validate) {
     sendMail(email, result.username);
-    return { codeStatus: 401, msg: "Account not validate !" };
+    return {
+      codeStatus: 401,
+      msg: "Account not validate ! Please validate it with the email you received !",
+    };
   }
 
   const token = createTokenJWT(
@@ -30,7 +38,15 @@ exports.login = async (body) => {
     +result.role_id
   );
 
-  return { codeStatus: 200, msg: "Login sucessfully", token };
+  return {
+    codeStatus: 200,
+    msg: "Login sucessfully",
+    user: {
+      username: result.username,
+      roleName,
+    },
+    token,
+  };
 };
 
 /**

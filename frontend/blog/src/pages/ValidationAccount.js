@@ -29,7 +29,7 @@ const ValidationAccount = () => {
         navigate("/signin");
       }, 3000);
     })();
-  }, [username]);
+  }, [username, navigate]);
 
   return <div>{message}</div>;
 };
