@@ -25,6 +25,9 @@ const Navbar = () => {
           <li>
             <Link to="/article/new">New Article</Link>
           </li>
+          <li>
+            <Link to="/theme/new">New Theme</Link>
+          </li>
         {/* )} */}
 
         {!auth.isLoggedIn && (
