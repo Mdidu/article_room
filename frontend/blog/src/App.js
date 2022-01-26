@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import ValidateWaiting from "./pages/ValidateWaiting";
 import ValidationAccount from "./pages/ValidationAccount";
+import NewArticle from "./pages/NewArticle";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/article/new" element={<NewArticle />} />
         <Route path="/validate" element={<ValidateWaiting />} />
         <Route path="/validate/:username" element={<ValidationAccount />} />
       </Routes>
