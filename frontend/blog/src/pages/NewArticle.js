@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../components/UI/Button";
 import EditorComponent from "../components/UI/EditorComponent";
@@ -35,7 +35,7 @@ const NewArticle = () => {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
     });
-    
+
     const { msg, articleId } = await datas.json();
 
     if (!datas.ok) setError(msg);

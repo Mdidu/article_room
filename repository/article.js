@@ -22,7 +22,10 @@ exports.findAllByThemeId = async (themeId) => {
  * @return { Promise<QueryResult<any>> }
  */
 exports.findOneById = async (id) => {
-  return await db.query(`SELECT * FROM article WHERE article.id = $1`, [id]);
+  return await db.query(
+    `SELECT article.*, name FROM article LEFT JOIN theme ON theme.id = article.theme_id WHERE article.id = $1`,
+    [id]
+  );
 };
 
 /**
