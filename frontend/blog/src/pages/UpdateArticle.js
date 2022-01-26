@@ -1,30 +1,45 @@
 import React, { useState } from "react";
+import { EditorState, ContentState, convertToRaw } from "draft-js";
 import { useForm } from "react-hook-form";
-import Button from "../components/UI/Button";
-import EditorComponent from "../components/UI/EditorComponent";
-import { EditorState, convertToRaw } from "draft-js";
-import "../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { useLocation, useNavigate } from "react-router-dom";
 import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
+import EditorComponent from "../components/UI/EditorComponent";
 import ErrorMessage from "../components/UI/ErrorMessage";
 import SelectTheme from "../components/UI/SelectTheme";
-import { useNavigate } from "react-router-dom";
+import Button from "../components/UI/Button";
 
-const NewArticle = () => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+const UpdateArticle = () => {
+  const { state } = useLocation();
   const [error, setError] = useState();
   const navigate = useNavigate();
+  const blocksFromHtml = htmlToDraft(state.content);
+  const { contentBlocks, entityMap } = blocksFromHtml;
+  const contentState = ContentState.createFromBlockArray(
+    contentBlocks,
+    entityMap
+  );
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(contentState)
+  );
   const {
     register,
     handleSubmit,
     formState: { isValid, errors },
   } = useForm({ mode: "onChange" });
 
+  const titleValidator = { required: true, minLength: 8 };
+
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+  };
+
   const onSubmit = async (data) => {
-    // value du content via editor text
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    
-    const datas = await fetch("http://localhost:8080/article", {
-      method: "POST",
+    console.log("aaa", data, content);
+
+    const datas = await fetch(`http://localhost:8080/article/${state.id}`, {
+      method: "PUT",
       body: JSON.stringify({
         title: data.title,
         content,
@@ -43,12 +58,6 @@ const NewArticle = () => {
     navigate(`/article/${articleId}`);
   };
 
-  const titleValidator = { required: true, minLength: 8 };
-
-  const onEditorStateChange = (editorState) => {
-    setEditorState(editorState);
-  };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
@@ -57,6 +66,7 @@ const NewArticle = () => {
           type="text"
           name="title"
           id="title"
+          defaultValue={state.title}
           {...register("title", titleValidator)}
         />
         {errors.title && <ErrorMessage type={errors.title.type} />}
@@ -66,8 +76,9 @@ const NewArticle = () => {
         editorState={editorState}
         onEditorStateChange={onEditorStateChange}
       />
+
       <div>
-        <SelectTheme register={register} />
+        <SelectTheme register={register} name={state.name} />
 
         {errors.theme && <ErrorMessage type={errors.theme.type} />}
       </div>
@@ -81,4 +92,4 @@ const NewArticle = () => {
   );
 };
 
-export default NewArticle;
+export default UpdateArticle;

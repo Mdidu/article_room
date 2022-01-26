@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const SelectTheme = (props) => {
   const [renderedTheme, setRenderedTheme] = useState();
   const themeValidator = { required: true };
-
+  console.log(props);
   useEffect(() => {
     (async () => {
       const datas = await fetch("http://localhost:8080/theme", {
@@ -14,12 +14,14 @@ const SelectTheme = (props) => {
         },
       });
       const theme = (await datas.json()).map((t) => (
-        <option key={t.id} value={t.id}>{t.name}</option>
+        <option key={t.id} value={t.id}>
+          {t.name}
+        </option>
       ));
 
       setRenderedTheme(theme);
     })();
-  }, []);
+  }, [props.name]);
 
   return (
     <select
