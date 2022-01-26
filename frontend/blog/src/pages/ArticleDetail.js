@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Moment from "react-moment";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Button from "../components/UI/Button";
 
 const ArticleDetail = () => {
   const [renderedArticle, setRenderedArticle] = useState({});
-  const { id, title, content, theme_id, created_at, name } = renderedArticle;
+  const { title, content, created_at, name } = renderedArticle;
   const { articleId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -20,12 +22,18 @@ const ArticleDetail = () => {
     })();
   }, [articleId]);
 
+  const updateArticle = () => {
+    navigate(`/article/update/${articleId}`, { state: renderedArticle });
+  };
+
   return (
     <div>
       <h1>{title}</h1>
       <p className="content" dangerouslySetInnerHTML={{ __html: content }} />
       <p>{name}</p>
       <Moment format="DD/MM/YYYY hh:MM:mm">{created_at}</Moment>
+
+      <Button onClick={updateArticle}>Modifier l'article</Button>
     </div>
   );
 };

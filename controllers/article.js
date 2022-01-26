@@ -58,7 +58,9 @@ exports.updateArticle = async (req, res) => {
     req.body
   );
 
-  res.status(codeStatus).json({ msg });
+  codeStatus === 200
+    ? res.status(codeStatus).json({ msg, articleId })
+    : res.status(codeStatus).json({ msg });
 };
 
 /**
