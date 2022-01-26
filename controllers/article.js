@@ -36,9 +36,13 @@ exports.findOneById = async (req, res) => {
  * @code 403
  */
 exports.addArticle = async (req, res) => {
-  const { codeStatus, msg } = await articleService.addArticle(req.body);
+  const { codeStatus, msg, articleId } = await articleService.addArticle(
+    req.body
+  );
 
-  res.status(codeStatus).json({ msg });
+  codeStatus === 201
+    ? res.status(codeStatus).json({ msg, articleId })
+    : res.status(codeStatus).json({ msg });
 };
 
 /**

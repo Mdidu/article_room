@@ -32,7 +32,7 @@ exports.findOneById = async (id) => {
 
 /**
  * @param { Object } body
- * @return { Promise<{codeStatus: Number, msg: String}> }
+ * @return { Promise<{codeStatus: Number, msg: String, articleId: Number}> }
  */
 exports.addArticle = async (body) => {
   const { title, content, themeId, user } = body;
@@ -53,7 +53,9 @@ exports.addArticle = async (body) => {
 
     if (result.rowCount === 0) _throw("Echec created");
 
-    return { codeStatus: 201, msg: "Created successfully" };
+    const articleId = result.rows[0].id;
+
+    return { codeStatus: 201, msg: "Created successfully", articleId };
   } catch (error) {
     return { codeStatus: 400, msg: error.message };
   }

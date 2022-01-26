@@ -35,7 +35,7 @@ exports.findOneById = async (id) => {
  */
 exports.addArticle = async (title, content, userId, themeId, createdAt) => {
   return await db.query(
-    `INSERT INTO article(title, content, user_id, theme_id, created_at) VALUES ($1, $2, $3, $4, $5)`,
+    `INSERT INTO article(title, content, user_id, theme_id, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING id`,
     [title, content, userId, themeId, createdAt]
   );
 };

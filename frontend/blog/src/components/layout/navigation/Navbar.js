@@ -21,11 +21,11 @@ const Navbar = () => {
           <Link to="/articles">Voir les articles</Link>
         </li>
 
-        {auth.roleName === "Admin" && (
+        {/* {auth.roleName === "Admin" && ( */}
           <li>
             <Link to="/article/new">New Article</Link>
           </li>
-        )}
+        {/* )} */}
 
         {!auth.isLoggedIn && (
           <>

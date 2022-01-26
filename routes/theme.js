@@ -6,10 +6,10 @@ const router = express.Router();
 
 /**
  * @route GET theme
- * 
+ *
  * @method GET
- * @access public
- * 
+ * @access private
+ *
  * @method POST
  * @access private
  */
@@ -20,10 +20,10 @@ router
 
 /**
  * @route PUT theme/:themeId
- * 
+ *
  * @method PUT
  * @access private
- * 
+ *
  * @method DELETE
  * @access private
  */
