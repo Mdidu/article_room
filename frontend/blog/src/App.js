@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import {} from "react-hook-form";
 import Navbar from "./components/layout/navigation/Navbar";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
@@ -10,6 +9,8 @@ import ValidationAccount from "./pages/ValidationAccount";
 import NewArticle from "./pages/NewArticle";
 import ArticleDetail from "./pages/ArticleDetail";
 import UpdateArticle from "./pages/UpdateArticle";
+import NewTheme from "./pages/NewTheme";
+import AllTheme from "./pages/AllTheme";
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
         <Route path="/article/new" element={<NewArticle />} />
         <Route path="/article/update/:articleId" element={<UpdateArticle />} />
         <Route path="/article/:articleId" element={<ArticleDetail />} />
+        <Route path="/theme" element={<AllTheme />} />
+        <Route path="/theme/new" element={<NewTheme />} />
         <Route path="/validate" element={<ValidateWaiting />} />
         <Route path="/validate/:username" element={<ValidationAccount />} />
       </Routes>
