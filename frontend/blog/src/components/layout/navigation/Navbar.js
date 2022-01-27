@@ -28,6 +28,9 @@ const Navbar = () => {
           <li>
             <Link to="/theme/new">New Theme</Link>
           </li>
+          <li>
+            <Link to="/theme">All Theme</Link>
+          </li>
         {/* )} */}
 
         {!auth.isLoggedIn && (
