@@ -7,7 +7,7 @@ const SelectTheme = (props) => {
 
   useEffect(() => {
     (async () => {
-      const datas = await themeService.findAll();
+      const datas = await themeService.findAllTheme();
       const theme = (await datas.json()).map((t) => (
         <option key={t.id} value={t.id}>
           {t.name}

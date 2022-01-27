@@ -1,48 +1,43 @@
-exports.findAll = async () => {
-  return await fetch("http://localhost:8080/article", {
+import { baseUrl, headers, headerAuth } from "../config/httpRequest";
+
+const findAll = async () => {
+  return await fetch(`${baseUrl}/article`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
   });
 };
 
-exports.findOneById = async (articleId) => {
-  return await fetch(`http://localhost:8080/article/${articleId}`, {
+const findOneById = async (articleId) => {
+  return await fetch(`${baseUrl}/article/${articleId}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
+    headers: headerAuth,
   });
 };
 
-exports.addArticle = async ({ title, theme }, content) => {
-  return await fetch("http://localhost:8080/article", {
+const addArticle = async ({ title, theme }, content) => {
+  return await fetch(`${baseUrl}/article`, {
     method: "POST",
     body: JSON.stringify({
       title: title,
       content,
       themeId: +theme,
     }),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
+    headers: headerAuth,
   });
 };
 
-exports.updateArticle = async (id, { title, theme }, content) => {
-  return await fetch(`http://localhost:8080/article/${id}`, {
+const updateArticle = async (id, { title, theme }, content) => {
+  return await fetch(`${baseUrl}/article/${id}`, {
     method: "PUT",
     body: JSON.stringify({
       title: title,
       content,
       themeId: +theme,
     }),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
+    headers: headerAuth,
   });
 };
+
+const articleServices = { findAll, findOneById, addArticle, updateArticle };
+
+export default articleServices;

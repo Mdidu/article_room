@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import authService from "../services/auth";
 
 const ValidationAccount = () => {
   const { username } = useParams();
@@ -8,16 +9,10 @@ const ValidationAccount = () => {
 
   useEffect(() => {
     (async () => {
-      const datas = await fetch(
-        `http://localhost:8080/auth/validate/${username}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const datas = await authService.validateAccount(username);
 
       const data = await datas.json();
-      
+
       if (!datas.ok)
         setMessage(`${data.msg} Vous allez être redirigé dans 3 secondes !`);
       else
