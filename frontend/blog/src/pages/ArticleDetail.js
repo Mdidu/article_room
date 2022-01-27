@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Moment from "react-moment";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/UI/Button";
+import articleService from "../services/article";
 
 const ArticleDetail = () => {
   const [renderedArticle, setRenderedArticle] = useState({});
@@ -11,13 +12,7 @@ const ArticleDetail = () => {
 
   useEffect(() => {
     (async () => {
-      const datas = await fetch(`http://localhost:8080/article/${articleId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      });
+      const datas = await articleService.findOneById(articleId);
       setRenderedArticle(await datas.json());
     })();
   }, [articleId]);

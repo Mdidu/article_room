@@ -8,6 +8,7 @@ import EditorComponent from "../components/UI/EditorComponent";
 import ErrorMessage from "../components/UI/ErrorMessage";
 import SelectTheme from "../components/UI/SelectTheme";
 import Button from "../components/UI/Button";
+import articleService from "../services/article";
 
 const UpdateArticle = () => {
   const { state } = useLocation();
@@ -36,21 +37,9 @@ const UpdateArticle = () => {
 
   const onSubmit = async (data) => {
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    console.log("aaa", data, content);
 
-    const datas = await fetch(`http://localhost:8080/article/${state.id}`, {
-      method: "PUT",
-      body: JSON.stringify({
-        title: data.title,
-        content,
-        themeId: +data.theme,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
-
+    const datas = await articleService.updateArticle(state.id, data, content);
+    
     const { msg, articleId } = await datas.json();
 
     if (!datas.ok) setError(msg);

@@ -8,6 +8,7 @@ import draftToHtml from "draftjs-to-html";
 import ErrorMessage from "../components/UI/ErrorMessage";
 import SelectTheme from "../components/UI/SelectTheme";
 import { useNavigate } from "react-router-dom";
+import articleService from "../services/article";
 
 const NewArticle = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -22,19 +23,8 @@ const NewArticle = () => {
   const onSubmit = async (data) => {
     // value du content via editor text
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    
-    const datas = await fetch("http://localhost:8080/article", {
-      method: "POST",
-      body: JSON.stringify({
-        title: data.title,
-        content,
-        themeId: +data.theme,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
+
+    const datas = await articleService.addArticle(data, content);
 
     const { msg, articleId } = await datas.json();
 
