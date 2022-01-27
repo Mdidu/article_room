@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/UI/Button";
 import ErrorMessage from "../components/UI/ErrorMessage";
 import { AuthContext } from "../store/auth-context";
+import authService from '../services/auth';
 
 const Signin = () => {
   const [error, setError] = useState();
@@ -23,14 +24,7 @@ const Signin = () => {
   };
 
   const onSubmit = async (data) => {
-    const datas = await fetch("http://localhost:8080/auth/signin", {
-      method: "POST",
-      body: JSON.stringify({
-        email: data.email,
-        password: data.password,
-      }),
-      headers: { "Content-Type": "application/json" },
-    });
+    const datas = await authService.signin(data);
 
     const { msg, user, token } = await datas.json();
 

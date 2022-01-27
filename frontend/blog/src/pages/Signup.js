@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/UI/Button";
 import ErrorMessage from "../components/UI/ErrorMessage";
+import authService from '../services/auth';
 
 const Signup = () => {
   const [error, setError] = useState();
@@ -27,15 +28,7 @@ const Signup = () => {
   };
 
   const onSubmit = async (data) => {
-    const datas = await fetch("http://localhost:8080/auth/signup", {
-      method: "POST",
-      body: JSON.stringify({
-        email: data.email,
-        username: data.username,
-        password: data.password,
-      }),
-      headers: { "Content-Type": "application/json" },
-    });
+    const datas = await authService.signup(data);
 
     const message = await datas.json();
 

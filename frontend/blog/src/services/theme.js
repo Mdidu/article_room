@@ -1,32 +1,29 @@
-exports.findAll = async () => {
-  return await fetch("http://localhost:8080/theme", {
+import { baseUrl, headerAuth } from "../config/httpRequest";
+
+const findAllTheme = async () => {
+  return await fetch(`${baseUrl}/theme`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
+    headers: headerAuth,
   });
 };
 
-exports.update = async (id, data) => {
-  return await fetch(`http://localhost:8080/theme/${id}`, {
+const updateTheme = async (id, data) => {
+  return await fetch(`${baseUrl}/theme/${id}`, {
     method: "PUT",
     body: JSON.stringify({
       name: data.name,
     }),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
+    headers: headerAuth,
   });
 };
 
-exports.delete = async (id) => {
-  return await fetch(`http://localhost:8080/theme/${id}`, {
+const deleteTheme = async (id) => {
+  return await fetch(`${baseUrl}/theme/${id}`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
+    headers: headerAuth,
   });
 };
+
+const themeServices = { findAllTheme, updateTheme, deleteTheme };
+
+export default themeServices;

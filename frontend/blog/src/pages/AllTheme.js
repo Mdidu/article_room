@@ -33,7 +33,7 @@ const AllTheme = () => {
 
   useEffect(() => {
     (async () => {
-      const datas = await themeService.findAll();
+      const datas = await themeService.findAllTheme();
 
       const theme = (await datas.json()).map((t) => (
         <div key={t.id} value={t.id}>
@@ -63,7 +63,7 @@ const AllTheme = () => {
 
   // Submit updated name of selected theme
   const onSubmit = async (data) => {
-    const datas = await themeService.update(id, data);
+    const datas = await themeService.updateTheme(id, data);
 
     const { msg } = await datas.json();
 
@@ -80,7 +80,7 @@ const AllTheme = () => {
   };
 
   const onDelete = async (id) => {
-    const datas = await themeService.delete(id);
+    const datas = await themeService.deleteTheme(id);
 
     const { msg } = await datas.json();
 
