@@ -20,3 +20,11 @@ exports.addChat = async (content, userId, createdAt) => {
     [content, createdAt, userId]
   );
 };
+
+/**
+ * @param { Number } id
+ * @return { Promise<QueryResult<any>> }
+ */
+exports.deleteChatMessage = async (id) => {
+  return await db.query(`DELETE FROM chat WHERE id = $1`, [id]);
+};

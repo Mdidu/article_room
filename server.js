@@ -34,4 +34,7 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (data) => {
     chatController.addChat(data);
   });
+  socket.on("deleteMessage", (data) => {
+    chatController.deleteChatMessage(data);
+  });
 });

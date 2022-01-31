@@ -25,6 +25,7 @@ const Chat = () => {
   useEffect(() => {
     (async () => {
       if (!socket) setSocket(openSocket(`ws://localhost:8080`));
+
       socket.emit("getMessage");
 
       socket.on("getMessage", (data) => {
@@ -36,6 +37,13 @@ const Chat = () => {
                 <Moment format="DD/MM/YYYY hh:MM:mm">
                   {message.created_at}
                 </Moment>
+                <Button
+                  onClick={() => {
+                    deleteMessage(message.id);
+                  }}
+                >
+                  Delete
+                </Button>
               </div>
               <div>{message.content}</div>
             </div>
@@ -53,6 +61,16 @@ const Chat = () => {
 
     socket.on("getMessage", (data) => {
       if (data.action === "create") setCurrentChat(!currentChat);
+    });
+  };
+
+  const deleteMessage = (messageId) => {
+    const token = localStorage.getItem("access_token");
+
+    socket.emit("deleteMessage", { messageId, token });
+
+    socket.on("getMessage", (data) => {
+      if (data.action === "delete") setCurrentChat(!currentChat);
     });
   };
 

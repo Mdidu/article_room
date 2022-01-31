@@ -24,3 +24,17 @@ exports.addChat = async ({ message, token }) => {
     chatMessageList,
   });
 };
+
+exports.deleteChatMessage = async ({ messageId, token }) => {
+  const user = decodingJWT(token);
+
+  const { msg } = await chatService.deleteChatMessage(+messageId, user);
+
+  const chatMessageList = await chatService.findAllChat();
+
+  io.getIO().emit("getMessage", {
+    action: "delete",
+    post: msg,
+    chatMessageList,
+  });
+};
