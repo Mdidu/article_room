@@ -1,14 +1,21 @@
 const express = require("express");
 const chatController = require("../controllers/chat");
 const auth = require("../middlewares/auth");
-const router = require("./article");
+
+const router = express.Router();
 
 /**
  * @route chat
  *
+ * @method GET
+ * @access public
+ *
  * @method POST
  * @access private
  */
-router.route("/").post([auth], chatController.addChat);
+router
+  .route("/")
+  .get(chatController.findAllChat)
+  .post([auth], chatController.addChat);
 
 module.exports = router;

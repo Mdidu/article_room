@@ -11,6 +11,7 @@ import ArticleDetail from "./pages/ArticleDetail";
 import UpdateArticle from "./pages/UpdateArticle";
 import NewTheme from "./pages/NewTheme";
 import AllTheme from "./pages/AllTheme";
+import Chat from "./components/UI/Chat";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <header>
         <Navbar />
       </header>
+      <Chat />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Signin />} />
