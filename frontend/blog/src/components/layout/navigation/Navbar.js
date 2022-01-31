@@ -21,17 +21,19 @@ const Navbar = () => {
           <Link to="/articles">Voir les articles</Link>
         </li>
 
-        {/* {auth.roleName === "Admin" && ( */}
-          <li>
-            <Link to="/article/new">New Article</Link>
-          </li>
-          <li>
-            <Link to="/theme/new">New Theme</Link>
-          </li>
-          <li>
-            <Link to="/theme">All Theme</Link>
-          </li>
-        {/* )} */}
+        {auth.roleName === "Admin" && (
+          <>
+            <li>
+              <Link to="/article/new">New Article</Link>
+            </li>
+            <li>
+              <Link to="/theme/new">New Theme</Link>
+            </li>
+            <li>
+              <Link to="/theme">All Theme</Link>
+            </li>
+          </>
+        )}
 
         {!auth.isLoggedIn && (
           <>
