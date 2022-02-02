@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/UI/Button";
 import ErrorMessage from "../components/UI/ErrorMessage";
 import { AuthContext } from "../store/auth-context";
-import authService from '../services/auth';
+import authService from "../services/auth";
+import Card from "../components/UI/Card";
+import styles from "./Signin.module.css";
+import FormField from "../components/UI/FormField";
 
 const Signin = () => {
   const [error, setError] = useState();
@@ -38,36 +41,37 @@ const Signin = () => {
   };
 
   return (
-    <div>
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="email">Email : </label>
-          <input
+    <div className={styles.signin_form_pages}>
+      <Card>
+        <h1>Sign In</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormField
+            labelText="Email : "
             type="text"
             name="email"
-            id="email"
-            {...register("email", emailValidator)}
+            validator={emailValidator}
+            register={register}
+            error={errors.email}
+            errorType={errors.email && errors.email.type}
           />
-          {errors.email && <ErrorMessage type={errors.email.type} />}
-        </div>
 
-        <div>
-          <label htmlFor="password">Password : </label>
-          <input
+          <FormField
+            labelText="Password : "
             type="password"
             name="password"
-            id="password"
-            {...register("password", passwordValidator)}
+            validator={passwordValidator}
+            register={register}
+            error={errors.password}
+            errorType={errors.password && errors.password.type}
           />
-          {errors.password && <ErrorMessage type={errors.password.type} />}
-        </div>
-        <Button type="submit" disabled={!isValid}>
-          Valider
-        </Button>
 
-        {error && <ErrorMessage type="global" message={error.msg} />}
-      </form>
+          <Button type="submit" disabled={!isValid}>
+            SignIn
+          </Button>
+
+          {error && <ErrorMessage type="global" message={error.msg} />}
+        </form>
+      </Card>
     </div>
   );
 };
