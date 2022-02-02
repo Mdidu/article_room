@@ -1,0 +1,9 @@
+.new_theme_pages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.new_theme_pages label,
+.new_theme_pages input {
+  margin-bottom: 1rem;
+}

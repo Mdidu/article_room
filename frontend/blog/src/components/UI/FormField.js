@@ -6,6 +6,7 @@ const FormField = ({
   labelText,
   type,
   name,
+  defaultValue,
   register,
   validator,
   error,
@@ -19,6 +20,7 @@ const FormField = ({
         type={type || "text"}
         name={name}
         id={name}
+        defaultValue={defaultValue}
         {...register(name, validator)}
       />
       {error && <ErrorMessage type={errorType} message={errorMessage} />}
