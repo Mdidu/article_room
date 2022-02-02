@@ -43,11 +43,11 @@ const AllTheme = () => {
           {t.name}
           <span>
             <Button onClick={() => onUpdate(t.id, t.name)}>
-              <FontAwesomeIcon icon={faEdit} color="#FABB51" />
+              <FontAwesomeIcon icon={faEdit} />
               <span className={styles.all_theme_button_txt}>Update</span>
             </Button>
             <Button onClick={() => onDelete(t.id)}>
-              <FontAwesomeIcon icon={faTrashAlt} color="#FABB51" />
+              <FontAwesomeIcon icon={faTrashAlt} />
               <span className={styles.all_theme_button_txt}>Delete</span>
             </Button>
 

@@ -8,9 +8,6 @@
   margin-top: 1rem;
   margin-bottom: 2rem;
 }
-.all_theme_form div label, .all_theme_form div input {
-  margin-bottom: 1rem;
-}
 .all_theme_render {
   display: flex;
   flex-direction: column; 

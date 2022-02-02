@@ -12,10 +12,11 @@ export const AuthContext = React.createContext({
 const AuthContextProvider = (props) => {
   const initialToken = localStorage.getItem("access_token");
   const initialUser = localStorage.getItem("user");
+  const initialRole = localStorage.getItem("role");
 
   const [token, setToken] = useState(initialToken);
   const [user, setUser] = useState(initialUser);
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState(initialRole);
   let roleName = role;
   let isLoggedIn = !!token;
 
@@ -25,6 +26,7 @@ const AuthContextProvider = (props) => {
     setRole(roleName);
     localStorage.setItem("access_token", token);
     localStorage.setItem("user", username);
+    localStorage.setItem("role", roleName);
   };
 
   const logoutHandler = () => {
@@ -33,6 +35,7 @@ const AuthContextProvider = (props) => {
     setRole(null);
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
+    localStorage.removeItem("role");
   };
 
   const contextValue = {

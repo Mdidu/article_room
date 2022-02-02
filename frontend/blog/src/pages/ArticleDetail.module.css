@@ -1,0 +1,25 @@
+.article_detail_pages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.article_detail_button_block button {
+  margin-top: 8px;
+  margin-left: 5px;
+}
+.article_detail_date_theme {
+  color: #FABB51;
+  opacity: 0.5;
+  font-style: italic;
+}
+.all_theme_button_txt {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .all_theme_button_txt {
+    display: inline-block;
+    margin-left: 5px;
+  }
+}

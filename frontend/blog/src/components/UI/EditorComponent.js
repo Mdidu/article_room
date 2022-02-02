@@ -68,6 +68,7 @@ const EditorComponent = (props) => {
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
         onEditorStateChange={props.onEditorStateChange}
+        editorStyle={{ border: "2px solid black" }}
         toolbar={{
           image: {
             uploadCallback: imageUploadCallBack,

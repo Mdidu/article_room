@@ -9,6 +9,8 @@ import ErrorMessage from "../components/UI/ErrorMessage";
 import SelectTheme from "../components/UI/SelectTheme";
 import Button from "../components/UI/Button";
 import articleService from "../services/article";
+import styles from "./UpdateArticle.module.css";
+import FormField from "../components/UI/FormField";
 
 const UpdateArticle = () => {
   const { state } = useLocation();
@@ -39,7 +41,7 @@ const UpdateArticle = () => {
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
     const datas = await articleService.updateArticle(state.id, data, content);
-    
+
     const { msg, articleId } = await datas.json();
 
     if (!datas.ok) setError(msg);
@@ -49,24 +51,23 @@ const UpdateArticle = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="title">Title : </label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          defaultValue={state.title}
-          {...register("title", titleValidator)}
-        />
-        {errors.title && <ErrorMessage type={errors.title.type} />}
-      </div>
+      <FormField
+        labelText="Title : "
+        type="text"
+        name="title"
+        defaultValue={state.title}
+        validator={titleValidator}
+        register={register}
+        error={errors.title}
+        errorType={errors.title && errors.title.type}
+      />
 
       <EditorComponent
         editorState={editorState}
         onEditorStateChange={onEditorStateChange}
       />
 
-      <div>
+      <div className={styles.new_article_select_component}>
         <SelectTheme register={register} name={state.name} />
 
         {errors.theme && <ErrorMessage type={errors.theme.type} />}
