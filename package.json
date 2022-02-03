@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "server": "nodemon server.js",
+    "server": "nodemon -r dotenv/config server.js",
     "client": "npm start --prefix frontend/blog",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
@@ -25,7 +25,15 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^14.2.0",
     "express": "^4.17.2",
-    "express-router": "^0.0.1"
+    "express-router": "^0.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.7.2",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "pg": "^8.7.1",
+    "react-moment": "^1.1.1",
+    "socket.io": "^4.4.1"
   }
 }

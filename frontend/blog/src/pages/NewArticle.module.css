@@ -1,0 +1,11 @@
+.new_article_select_component {
+  width: 12rem;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font: inherit;
+  padding-left: 0.5rem;
+}
+select {
+  width: 12rem;
+  border-radius: 5px;
+}

@@ -1,0 +1,20 @@
+.home_pages {
+  display: grid;
+  grid-template-columns: repeat(8, 12.5%);
+  justify-items: center;
+  align-items: center;
+}
+.home_pages h1 {
+  grid-row: 1;
+  grid-column: 4 / 6;
+}
+.home_article_list_block {
+  grid-row: 2;
+  grid-column: 2/ 8;
+}
+.home_article_list_block div {
+  max-width: 50vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
