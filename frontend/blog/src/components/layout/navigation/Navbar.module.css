@@ -21,7 +21,6 @@ a {
   text-decoration: none;
   font-size: 20px;
 }
-
 .navbar_item {
   text-decoration: none;
   text-transform: uppercase;
@@ -78,6 +77,9 @@ a {
 #navbar_all_theme {
   grid-column: 4;
 }
+#navbar_new_article span, #navbar_new_theme span, #navbar_all_theme span {
+  display: none;
+}
 
 @media screen and (min-width: 768px) {
   nav ul {
@@ -107,5 +109,11 @@ a {
   }
   #navbar_logout {
     grid-column: 8;
+  }
+  #navbar_new_article svg, #navbar_new_theme svg, #navbar_all_theme svg {
+    display: none;
+  }
+  #navbar_new_article span, #navbar_new_theme span, #navbar_all_theme span {
+    display: inline-block;
   }
 }

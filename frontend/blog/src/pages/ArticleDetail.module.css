@@ -9,9 +9,11 @@
   margin-left: 5px;
 }
 .article_detail_date_theme {
-  color: #FABB51;
-  opacity: 0.5;
+  opacity: 0.8;
   font-style: italic;
+}
+.article_detail_date_theme span {
+  margin-left: 5px;
 }
 .all_theme_button_txt {
   display: none;

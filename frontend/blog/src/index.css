@@ -3,6 +3,10 @@
   margin: 0;
   font-family: 'Lato', sans-serif;
 }
+body {
+  background-color: #F8F8FF;
+
+}
 a {
   color: #0A0A0A;
 }
