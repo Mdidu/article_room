@@ -35,7 +35,7 @@ const ArticleDetail = () => {
     <div className={styles.article_detail_pages}>
       <h1>{title}</h1>
       <p className={styles.article_detail_date_theme}>
-        <Moment format="DD/MM/YYYY hh:MM:mm">{created_at}</Moment> -
+        <Moment format="DD/MM/YYYY hh:MM:mm">{created_at}</Moment><span>-</span>
         <span>{name}</span>
       </p>
       <p className="content" dangerouslySetInnerHTML={{ __html: content }} />

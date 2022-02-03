@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import openSocket from "socket.io-client";
-import Button from "./Button";
-import Moment from "react-moment";
+import { Widget, addResponseMessage, addUserMessage } from "react-chat-widget";
+import "react-chat-widget/lib/styles.css";
+import "./Chat.css";
 
 const Chat = () => {
   const [socket, setSocket] = useState(null);
-  const [currentChat, setCurrentChat] = useState(false);
-  const [renderedChatMessage, setRenderedChatMessage] = useState();
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { isValid },
-  } = useForm({ mode: "onChange" });
-
-  const messageValidator = { required: true };
+  const username = localStorage.getItem("user");
 
   useEffect(() => {
     setSocket(openSocket(`ws://localhost:8080`));
@@ -24,70 +14,34 @@ const Chat = () => {
 
   useEffect(() => {
     (async () => {
-      if (!socket) setSocket(openSocket(`ws://localhost:8080`));
+      if (!socket) await setSocket(openSocket(`ws://localhost:8080`));
 
       socket.emit("getMessage");
 
       socket.on("getMessage", (data) => {
-        setRenderedChatMessage(
-          data.chatMessageList.map((message) => (
-            <div key={message.id}>
-              <div>
-                {message.username}
-                <Moment format="DD/MM/YYYY hh:MM:mm">
-                  {message.created_at}
-                </Moment>
-                <Button
-                  onClick={() => {
-                    deleteMessage(message.id);
-                  }}
-                >
-                  Delete
-                </Button>
-              </div>
-              <div>{message.content}</div>
-            </div>
-          ))
-        );
+        data.chatMessageList.map((message) => {
+          if (username === message.username)
+            return addUserMessage(message.content);
+          else return addResponseMessage(message.content);
+        });
       });
-      reset();
     })();
-  }, [currentChat, reset, socket]);
+  }, [socket]);
 
-  const addMessage = ({ message }) => {
+  const addMessage = (message) => {
     const token = localStorage.getItem("access_token");
 
     socket.emit("sendMessage", { message, token });
-
-    socket.on("getMessage", (data) => {
-      if (data.action === "create") setCurrentChat(!currentChat);
-    });
-  };
-
-  const deleteMessage = (messageId) => {
-    const token = localStorage.getItem("access_token");
-
-    socket.emit("deleteMessage", { messageId, token });
-
-    socket.on("getMessage", (data) => {
-      if (data.action === "delete") setCurrentChat(!currentChat);
-    });
   };
 
   return (
     <div>
-      <div>{renderedChatMessage}</div>
-      <form onSubmit={handleSubmit(addMessage)}>
-        <input
-          type="text"
-          name="message"
-          id="message"
-          {...register("message", messageValidator)}
-        />
-        <Button type="submit" disabled={!isValid}>
-          Valider
-        </Button>
-      </form>
+      <Widget
+        handleNewUserMessage={addMessage}
+        title="General chat"
+        subtitle=""
+        senderPlaceHolder="Write a message !"
+      />
     </div>
   );
 };
