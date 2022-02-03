@@ -42,33 +42,36 @@ const NewArticle = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FormField
-        labelText="Title : "
-        type="text"
-        name="title"
-        validator={titleValidator}
-        register={register}
-        error={errors.title}
-        errorType={errors.title && errors.title.type}
-      />
+    <div className={styles.new_article_pages}>
+      <h1>Add a article</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormField
+          labelText="Title : "
+          type="text"
+          name="title"
+          validator={titleValidator}
+          register={register}
+          error={errors.title}
+          errorType={errors.title && errors.title.type}
+        />
 
-      <EditorComponent
-        editorState={editorState}
-        onEditorStateChange={onEditorStateChange}
-      />
-      <div className={styles.new_article_select_component}>
-        <SelectTheme register={register} />
+        <EditorComponent
+          editorState={editorState}
+          onEditorStateChange={onEditorStateChange}
+        />
+        <div className={styles.new_article_select_component}>
+          <SelectTheme register={register} />
 
-        {errors.theme && <ErrorMessage type={errors.theme.type} />}
-      </div>
+          {errors.theme && <ErrorMessage type={errors.theme.type} />}
+        </div>
 
-      <Button type="submit" disabled={!isValid}>
-        Valider
-      </Button>
+        <Button type="submit" disabled={!isValid}>
+          Valider
+        </Button>
 
-      {error && <ErrorMessage type="global" message={error.msg} />}
-    </form>
+        {error && <ErrorMessage type="global" message={error.msg} />}
+      </form>
+    </div>
   );
 };
 
