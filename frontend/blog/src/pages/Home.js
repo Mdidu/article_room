@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import articleService from "../services/article";
+import styles from "./Home.module.css";
 
 const Home = () => {
   const [renderedArticleList, setArticleList] = useState();
@@ -20,9 +21,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.home_pages}>
       <h1>Bienvenue !</h1>
-      {renderedArticleList}
+      <div className={styles.home_article_list_block}>
+        {renderedArticleList}
+      </div>
     </div>
   );
 };

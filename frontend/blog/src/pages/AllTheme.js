@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/UI/Button";
 import ErrorMessage from "../components/UI/ErrorMessage";
-import Card from "../components/UI/Card";
 import Modal from "../components/UI/Modal";
 import { useForm } from "react-hook-form";
 import themeService from "../services/theme";
+import styles from "./AllTheme.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import FormField from "../components/UI/FormField";
 
 const AllTheme = () => {
   const [renderedTheme, setRenderedTheme] = useState();
@@ -13,6 +16,7 @@ const AllTheme = () => {
   const [theme, setTheme] = useState();
   const [id, setId] = useState();
   const [cartIsShown, setCartIsShown] = useState(false);
+  const [reset, setReset] = useState(false);
 
   const navigate = useNavigate();
   const themeValidator = { required: true, minLength: 3 };
@@ -34,13 +38,18 @@ const AllTheme = () => {
   useEffect(() => {
     (async () => {
       const datas = await themeService.findAllTheme();
-
       const theme = (await datas.json()).map((t) => (
         <div key={t.id} value={t.id}>
           {t.name}
           <span>
-            <Button onClick={() => onUpdate(t.id, t.name)}>Modifier</Button>
-            <Button onClick={() => onDelete(t.id)}>Supprimer</Button>
+            <Button onClick={() => onUpdate(t.id, t.name)}>
+              <FontAwesomeIcon icon={faEdit} />
+              <span className={styles.all_theme_button_txt}>Update</span>
+            </Button>
+            <Button onClick={() => onDelete(t.id)}>
+              <FontAwesomeIcon icon={faTrashAlt} />
+              <span className={styles.all_theme_button_txt}>Delete</span>
+            </Button>
 
             {error && <ErrorMessage type="global" message={error.msg} />}
           </span>
@@ -49,7 +58,7 @@ const AllTheme = () => {
 
       setRenderedTheme(theme);
     })();
-  }, [error]);
+  }, [error, reset]);
 
   // Display modal
   const showModalHandler = () => {
@@ -69,7 +78,8 @@ const AllTheme = () => {
 
     if (!datas.ok) setError(msg);
 
-    window.location.reload();
+    hideModalHandler();
+    setReset(!reset);
   };
 
   // Display modal and update the states Theme && Id
@@ -90,36 +100,38 @@ const AllTheme = () => {
   };
 
   return (
-    <div>
-      <h1>Liste des thèmes</h1>
-      {renderedTheme}
+    <div className={styles.all_theme_pages}>
+      <h1>List of themes</h1>
+
+      <div className={styles.all_theme_render}>{renderedTheme}</div>
       {cartIsShown && (
         <Modal
           show={showModalHandler}
           onHide={hideModalHandler}
           onClose={hideModalHandler}
         >
-          <Card>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
-                <label htmlFor="name">Name : </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  defaultValue={theme}
-                  {...register("name", themeValidator)}
-                />
-                {errors.name && <ErrorMessage type={errors.name.type} />}
-              </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={styles.all_theme_form}
+          >
+            <FormField
+              labelText="Name : "
+              type="text"
+              name="name"
+              validator={themeValidator}
+              defaultValue={theme}
+              register={register}
+              error={errors.name}
+              errorType={errors.name && errors.name.type}
+            />
 
-              <Button type="submit" disabled={!isValid}>
-                Valider
-              </Button>
+            <Button type="submit" disabled={!isValid}>
+              <FontAwesomeIcon icon={faEdit} color="#FABB51" />
+              <span className={styles.all_theme_button_txt}>Update</span>
+            </Button>
 
-              {error && <ErrorMessage type="global" message={error.msg} />}
-            </form>
-          </Card>
+            {error && <ErrorMessage type="global" message={error.msg} />}
+          </form>
         </Modal>
       )}
     </div>

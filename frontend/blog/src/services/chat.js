@@ -17,13 +17,6 @@ const addChat = async (message) => {
   });
 };
 
-const deleteChat = async (id) => {
-  return await fetch(`${baseUrl}/chat/${id}`, {
-    method: "DELETE",
-    headers: headerAuth,
-  });
-};
-
-const chatServices = { findAllChat, addChat, deleteChat };
+const chatServices = { findAllChat, addChat };
 
 export default chatServices;

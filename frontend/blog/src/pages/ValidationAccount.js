@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Card from "../components/UI/Card";
 import authService from "../services/auth";
+import styles from "./ValidationAccount.module.css";
 
 const ValidationAccount = () => {
   const { username } = useParams();
@@ -14,10 +16,10 @@ const ValidationAccount = () => {
       const data = await datas.json();
 
       if (!datas.ok)
-        setMessage(`${data.msg} Vous allez être redirigé dans 3 secondes !`);
+        setMessage(`${data.msg} You will be redirected in 3 seconds !`);
       else
         setMessage(
-          "Validation réussi, vous allez être redirigé dans 3 secondes !"
+          "Validation successful, you will be redirected in 3 seconds !"
         );
 
       setTimeout(() => {
@@ -26,7 +28,14 @@ const ValidationAccount = () => {
     })();
   }, [username, navigate]);
 
-  return <div>{message}</div>;
+  return (
+    <div className={styles.validation_account_pages}>
+      <Card >
+        <h1>Validate account</h1>
+        <div>{message}</div>
+      </Card>
+    </div>
+  );
 };
 
 export default ValidationAccount;

@@ -1,0 +1,21 @@
+.form_field_group {
+  display: grid;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.form_field_group label {
+  font-weight: bold;
+  margin-right: 2rem;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.form_field_group input {
+  width: 12rem;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font: inherit;
+  padding-left: 0.5rem;
+}

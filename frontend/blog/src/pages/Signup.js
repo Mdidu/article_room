@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/UI/Button";
+import Card from "../components/UI/Card";
 import ErrorMessage from "../components/UI/ErrorMessage";
-import authService from '../services/auth';
+import FormField from "../components/UI/FormField";
+import authService from "../services/auth";
+import styles from "./Signup.module.css";
 
 const Signup = () => {
   const [error, setError] = useState();
@@ -37,57 +40,57 @@ const Signup = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="email">Email : </label>
-        <input
-          type="text"
-          name="email"
-          id="email"
-          {...register("email", emailValidator)}
-        />
-        {errors.email && <ErrorMessage type={errors.email.type} />}
-      </div>
-      <div>
-        <label htmlFor="username">Username : </label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          {...register("username", usernameValidator)}
-        />
-        {errors.username && <ErrorMessage type={errors.username.type} />}
-      </div>
-      <div>
-        <label htmlFor="password">Password : </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          {...register("password", passwordValidator)}
-        />
-        {errors.password && <ErrorMessage type={errors.password.type} />}
-      </div>
-      <div>
-        <label htmlFor="checkingPassword">CheckingPassword : </label>
-        <input
-          type="password"
-          name="checkingPassword"
-          id="checkingPassword"
-          {...register("checkingPassword", passwordValidator)}
-        />
-        {errors.checkingPassword && (
-          <ErrorMessage
-            type={errors.checkingPassword.type}
-            message={errors.checkingPassword.message}
+    <div className={styles.signup_form_pages}>
+      <Card>
+        <h1>Register</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormField
+            labelText="Email : "
+            type="text"
+            name="email"
+            validator={emailValidator}
+            register={register}
+            error={errors.email}
+            errorType={errors.email && errors.email.type}
           />
-        )}
-      </div>
-      <Button type="submit" disabled={!isValid}>
-        Valider
-      </Button>
-      {error && <ErrorMessage type="global" message={error.msg} />}
-    </form>
+
+          <FormField
+            labelText="Username : "
+            type="text"
+            name="username"
+            validator={usernameValidator}
+            register={register}
+            error={errors.username}
+            errorType={errors.username && errors.username.type}
+          />
+
+          <FormField
+            labelText="Password : "
+            type="password"
+            name="password"
+            validator={passwordValidator}
+            register={register}
+            error={errors.password}
+            errorType={errors.password && errors.password.type}
+          />
+
+          <FormField
+            labelText="CheckingPassword : "
+            type="password"
+            name="checkingPassword"
+            validator={passwordValidator}
+            register={register}
+            error={errors.checkingPassword}
+            errorType={errors.checkingPassword && errors.checkingPassword.type}
+            message={errors.checkingPassword && errors.checkingPassword.message}
+          />
+          <Button type="submit" disabled={!isValid}>
+            Register
+          </Button>
+          {error && <ErrorMessage type="global" message={error.msg} />}
+        </form>
+      </Card>
+    </div>
   );
 };
 

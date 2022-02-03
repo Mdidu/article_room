@@ -9,6 +9,8 @@ import ErrorMessage from "../components/UI/ErrorMessage";
 import SelectTheme from "../components/UI/SelectTheme";
 import { useNavigate } from "react-router-dom";
 import articleService from "../services/article";
+import FormField from "../components/UI/FormField";
+import styles from "./NewArticle.module.css";
 
 const NewArticle = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -41,22 +43,21 @@ const NewArticle = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="title">Title : </label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          {...register("title", titleValidator)}
-        />
-        {errors.title && <ErrorMessage type={errors.title.type} />}
-      </div>
+      <FormField
+        labelText="Title : "
+        type="text"
+        name="title"
+        validator={titleValidator}
+        register={register}
+        error={errors.title}
+        errorType={errors.title && errors.title.type}
+      />
 
       <EditorComponent
         editorState={editorState}
         onEditorStateChange={onEditorStateChange}
       />
-      <div>
+      <div className={styles.new_article_select_component}>
         <SelectTheme register={register} />
 
         {errors.theme && <ErrorMessage type={errors.theme.type} />}
