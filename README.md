@@ -1,4 +1,4 @@
-# react_node_blog
+# article_room
 
 La stack technique est React.js, Node.js, Express et PostgreSQL.
 
